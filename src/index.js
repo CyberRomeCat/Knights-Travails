@@ -1,34 +1,49 @@
-function HelloWorld({
-  greeting = "hello",
-  greeted = '"World"',
-  silent = false,
-  onMouseOver,
-}) {
-  if (!greeting) {
-    return null;
+import { LinkedList } from "./linked-list.js";
+
+class Node {
+  constructor(vertex) {
+    this.vertex = vertex;
+    this.vertices = new LinkedList();
+  }
+}
+
+let knightMoves = () => {
+  let moves = [
+    [2, -1],
+    [2, 1],
+    [1, -2],
+    [1, 2],
+    [-1, -2],
+    [-1, 2],
+    [-2, -1],
+    [-2, 1],
+  ];
+
+  function graph(vertex) {
+    let n = new Node(vertex);
+    let nodeVerti = addVertices(n);
+    return nodeVerti;
   }
 
-  // TODO: Don't use random in render
-  let num = Math.floor(Math.random() * 1e7)
-    .toString()
-    .replace(/\.\d+/gi, "");
+  function addVertices(node, allMoves = []) {
+    for (let i = 0; i < moves.length; i++) {
+      let vertices = [
+        node.vertex[0] + moves[i][0],
+        node.vertex[1] + moves[i][1],
+      ];
+      if (vertices[0] > 0 && vertices[1] > 0) {
+        allMoves.push(vertices);
+        node.vertices.prepend(new Node(vertices));
+      }
+    }
+    return node;
+  }
 
-  return (
-    <div
-      className="HelloWorld"
-      title={`You are visitor number ${num}`}
-      onMouseOver={onMouseOver}
-    >
-      <strong>
-        {greeting.slice(0, 1).toUpperCase() + greeting.slice(1).toLowerCase()}
-      </strong>
-      {greeting.endsWith(",") ? (
-        " "
-      ) : (
-        <span style={{ color: "grey" }}>", "</span>
-      )}
-      <em>{greeted}</em>
-      {silent ? "." : "!"}
-    </div>
-  );
-}
+  return { graph };
+};
+
+let moves = knightMoves();
+let node = moves.graph([0, 0]);
+console.log(node);
+
+export { knightMoves };
