@@ -6,7 +6,7 @@ A knight in chess can move to any square depending on its move from a standard 8
 
 My task is to write a function `KnightMoves()` that shows the shortest way possible to move from one square to the other by outputting all squares along the way.
 
-**_Example:_**:
+**_Example:_**
 
 ```
 knightMoves([0,0],[1,2]) == [[0,0],[1,2]]
