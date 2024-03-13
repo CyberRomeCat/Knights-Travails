@@ -18,15 +18,6 @@ class Graph {
     this.adjacencyList[vertex2].push([vertex1]);
   }
 
-  addWeight(vertex1, vertex2, weight) {
-    if (Array.isArray(vertex1) == true) vertex1 = vertex1.join("");
-    if (Array.isArray(vertex2) == true) vertex2 = vertex2.join("");
-    let indexV1 = this.adjacencyList[vertex2].findIndex((e) => e[0] == vertex1);
-    let indexV2 = this.adjacencyList[vertex1].findIndex((e) => e[0] == vertex2);
-    this.adjacencyList[vertex1][indexV2].push(weight);
-    this.adjacencyList[vertex2][indexV1].push(weight);
-  }
-
   removeEdge(vertex1, vertex2) {
     if (Array.isArray(vertex1) == true) vertex1 = vertex1.join("");
     if (Array.isArray(vertex2) == true) vertex2 = vertex2.join("");
