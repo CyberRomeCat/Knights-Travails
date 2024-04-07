@@ -19,6 +19,4 @@ knightMoves([0,0],[7,7]) == [[0,0],[2,1],[4,2],[6,3],[4,4],[6,5],[7,7]] or knigh
 
 ```
 
-## Lessons Learned
 
-Implemented djkstras algorithm
