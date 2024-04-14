@@ -44,15 +44,42 @@ class Graph {
   }
 }
 
-const graph = new Graph();
-graph.addVertex("A");
-graph.addVertex("B");
-graph.addVertex("C");
-graph.addVertex("D");
-graph.addVertex("E");
-graph.addEdge("A", "B");
-graph.addEdge("B", "E");
-graph.addEdge("A", "D");
-graph.addEdge("A", "C");
-graph.addEdge("E", "D");
-graph.addEdge("C", "D");
+const KnightsMoves = (s, e) => {
+  let moves = [
+    [-1, 2],
+    [1, 2],
+    [-2, 1],
+    [2, 1],
+    [-2, -1],
+    [2, -1],
+    [-1, -2],
+    [1, -2],
+  ];
+
+  function allMovesGraph(start = s) {
+    const graph = new Graph();
+    let startMove = start;
+    let visitedMoves = [startMove];
+    let q = [startMove];
+    while (q.length != 0) {
+      for (let i = 0; i < moves.length; i++) {
+        let move = [q[0][0] + moves[i][0], q[0][1] + moves[i][1]];
+        if (move[0] < 0 || move[0] > 7 || move[1] < 0 || move[1] > 7) continue;
+        if (visitedMoves.some((e) => e[0] === move[0] && e[1] === move[1]))
+          continue;
+        graph.addVertex(q[0]);
+        graph.addVertex(move);
+        graph.addEdge(q[0], move);
+        visitedMoves.push(move);
+        q.push(move);
+      }
+      q.shift();
+    }
+    console.log(graph.adjacencyList);
+    console.log(graph.print());
+  }
+
+  return { allMovesGraph };
+};
+
+KnightsMoves([3, 3]).allMovesGraph();
