@@ -95,19 +95,28 @@ const KnightsMoves = (start, end) => {
     let startNode = start.join("");
     let visitedNode = [[startNode]];
     pathCost[startNode] = cost;
-    let q = [startNode];
+    let q = [startNode, 1];
     while (q.length != 0) {
-      cost += 1;
+      if (q[0] === 1) {
+        cost += 1;
+        q.shift();
+        continue;
+      }
       let neigborNodes = graph.adjacencyList[q[0]];
       neigborNodes.forEach((n) => {
-        console.log(visitedNode);
-        if (visitedNode.some((e) => e[0] == n) === false) {
-          pathCost[n] = cost;
+        if (visitedNode.some((e) => e[0] === n[0]) == false) {
+          pathCost[n] = cost + 1;
           visitedNode.push(n);
           q.push(n);
         }
       });
-      q.shift();
+      let lastElement = q.slice(-1);
+      if (lastElement == 1) {
+        q.shift();
+      } else {
+        q.push(1);
+        q.shift();
+      }
     }
     console.log(pathCost);
   }
@@ -115,5 +124,5 @@ const KnightsMoves = (start, end) => {
   return { allMovesGraph, BFS };
 };
 
-let knight = KnightsMoves([0, 0]);
-console.log(knight.allMovesGraph());
+let knight = KnightsMoves([3, 3]);
+console.log(knight.BFS());
