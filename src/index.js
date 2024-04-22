@@ -90,33 +90,28 @@ const KnightsMoves = (start, end) => {
 
   function BFS() {
     let graph = allMovesGraph();
-    let cost = 0;
-    let pathCost = {};
     let startNode = start.join("");
-    let visitedNode = [[startNode]];
-    pathCost[startNode] = cost;
-    let q = [startNode, 1];
+    let visitedNodes = [startNode];
+    let pathCost = {};
+    pathCost[startNode] = [];
+    let q = [];
+    graph.adjacencyList[startNode].forEach((n) => {
+      q.push([startNode, n[0], 1]);
+    });
     while (q.length != 0) {
-      if (q[0] === 1) {
-        cost += 1;
-        q.shift();
-        continue;
+      let firstEl = q[0];
+      if (pathCost.hasOwnProperty(firstEl[1]) == false) {
+        pathCost[firstEl[1]] = [firstEl[0], firstEl[2]];
       }
-      let neigborNodes = graph.adjacencyList[q[0]];
-      neigborNodes.forEach((n) => {
-        if (visitedNode.some((e) => e[0] === n[0]) == false) {
-          pathCost[n] = cost + 1;
-          visitedNode.push(n);
-          q.push(n);
+      graph.adjacencyList[firstEl[1]].forEach((n) => {
+        if (pathCost.hasOwnProperty(n[0]) == false) {
+          q.push([firstEl[1], n[0], firstEl[2] + 1]);
         }
       });
-      let lastElement = q.slice(-1);
-      if (lastElement == 1) {
-        q.shift();
-      } else {
-        q.push(1);
-        q.shift();
+      if (visitedNodes.some((n) => n == firstEl[0]) == false) {
+        visitedNodes.push(firstEl[0]);
       }
+      q.shift();
     }
     console.log(pathCost);
   }
@@ -124,5 +119,5 @@ const KnightsMoves = (start, end) => {
   return { allMovesGraph, BFS };
 };
 
-let knight = KnightsMoves([3, 3]);
-console.log(knight.BFS());
+let knight = KnightsMoves([0, 0]);
+knight.BFS();
