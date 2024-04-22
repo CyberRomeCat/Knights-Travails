@@ -113,11 +113,32 @@ const KnightsMoves = (start, end) => {
       }
       q.shift();
     }
-    console.log(pathCost);
+
+    return pathCost;
   }
 
-  return { allMovesGraph, BFS };
+  function getShortestPath() {
+    let allPaths = BFS();
+    let startNode = start.join("");
+    let endNode = end.join("");
+    let getPath = [endNode];
+    let lastEl = getPath.slice(-1);
+    while (lastEl != startNode) {
+      getPath.push(allPaths[lastEl][0]);
+      lastEl = getPath.slice(-1);
+    }
+    let shortestPath = getPath.reverse();
+    return shortestPath;
+  }
+
+  let shortestPath = [];
+  let path = getShortestPath();
+  path.forEach((n) => {
+    shortestPath.push([n[0], n[1]]);
+  });
+
+  return shortestPath;
 };
 
-let knight = KnightsMoves([0, 0]);
-knight.BFS();
+let knight = KnightsMoves([0, 0], [7, 7]);
+console.log(knight);
